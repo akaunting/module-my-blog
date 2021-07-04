@@ -10,87 +10,87 @@ use Tests\Feature\FeatureTestCase;
 
 class CommentsTest extends FeatureTestCase
 {
-	public function testItShouldSeeCommentListPage()
-	{
-		$this->loginAs()
-			->get(route('my-blog.comments.index'))
-			->assertStatus(200)
-			->assertSeeText(trans_choice('my-blog::general.comments', 2));
-	}
+    public function testItShouldSeeCommentListPage()
+    {
+        $this->loginAs()
+            ->get(route('my-blog.comments.index'))
+            ->assertStatus(200)
+            ->assertSeeText(trans_choice('my-blog::general.comments', 2));
+    }
 
-	public function testItShouldSeeCommentCreatePage()
-	{
-		$this->loginAs()
-			->get(route('my-blog.comments.create'))
-			->assertStatus(200)
-			->assertSeeText(trans('general.title.new', ['type' => trans_choice('my-blog::general.comments', 1)]));
-	}
+    public function testItShouldSeeCommentCreatePage()
+    {
+        $this->loginAs()
+            ->get(route('my-blog.comments.create'))
+            ->assertStatus(200)
+            ->assertSeeText(trans('general.title.new', ['type' => trans_choice('my-blog::general.comments', 1)]));
+    }
 
-	public function testItShouldCreateComment()
-	{
+    public function testItShouldCreateComment()
+    {
         Post::factory()->enabled()->count(5)->create();
 
-		$request = $this->getRequest();
+        $request = $this->getRequest();
 
-		$this->loginAs()
-			->post(route('my-blog.comments.store'), $request)
-			->assertStatus(200);
+        $this->loginAs()
+            ->post(route('my-blog.comments.store'), $request)
+            ->assertStatus(200);
 
-		$this->assertFlashLevel('success');
+        $this->assertFlashLevel('success');
 
-		$this->assertDatabaseHas('my_blog_comments', $request);
-	}
+        $this->assertDatabaseHas('my_blog_comments', $request);
+    }
 
-	public function testItShouldSeeCommentUpdatePage()
-	{
+    public function testItShouldSeeCommentUpdatePage()
+    {
         Post::factory()->enabled()->count(5)->create();
 
-		$request = $this->getRequest();
+        $request = $this->getRequest();
 
         $comment = $this->dispatch(new CreateComment($request));
 
-		$this->loginAs()
-			->get(route('my-blog.comments.edit', $comment->id))
-			->assertStatus(200)
-			->assertSee($comment->description);
-	}
+        $this->loginAs()
+            ->get(route('my-blog.comments.edit', $comment->id))
+            ->assertStatus(200)
+            ->assertSee($comment->description);
+    }
 
-	public function testItShouldUpdateComment()
-	{
+    public function testItShouldUpdateComment()
+    {
         Post::factory()->enabled()->count(5)->create();
 
-		$request = $this->getRequest();
+        $request = $this->getRequest();
 
-		$comment = $this->dispatch(new CreateComment($request));
+        $comment = $this->dispatch(new CreateComment($request));
 
-		$request['description'] = $this->faker->text(15);
+        $request['description'] = $this->faker->text(15);
 
-		$this->loginAs()
-			->patch(route('my-blog.comments.update', $comment->id), $request)
-			->assertStatus(200)
-			->assertSee($request['description']);
+        $this->loginAs()
+            ->patch(route('my-blog.comments.update', $comment->id), $request)
+            ->assertStatus(200)
+            ->assertSee($request['description']);
 
-		$this->assertFlashLevel('success');
+        $this->assertFlashLevel('success');
 
-		$this->assertDatabaseHas('my_blog_comments', $request);
-	}
+        $this->assertDatabaseHas('my_blog_comments', $request);
+    }
 
-	public function testItShouldDeleteComment()
-	{
+    public function testItShouldDeleteComment()
+    {
         Post::factory()->enabled()->count(5)->create();
 
-		$request = $this->getRequest();
+        $request = $this->getRequest();
 
-		$comment = $this->dispatch(new CreateComment($request));
+        $comment = $this->dispatch(new CreateComment($request));
 
-		$this->loginAs()
-			->delete(route('my-blog.comments.destroy', $comment->id))
-			->assertStatus(200);
+        $this->loginAs()
+            ->delete(route('my-blog.comments.destroy', $comment->id))
+            ->assertStatus(200);
 
-		$this->assertFlashLevel('success');
+        $this->assertFlashLevel('success');
 
-		$this->assertSoftDeleted('my_blog_comments', $request);
-	}
+        $this->assertSoftDeleted('my_blog_comments', $request);
+    }
 
     public function testItShouldExportComments()
     {

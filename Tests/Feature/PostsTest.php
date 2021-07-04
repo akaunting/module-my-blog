@@ -11,79 +11,79 @@ use Tests\Feature\FeatureTestCase;
 
 class PostsTest extends FeatureTestCase
 {
-	public function testItShouldSeePostListPage()
-	{
-		$this->loginAs()
-			->get(route('my-blog.posts.index'))
-			->assertStatus(200)
-			->assertSeeText(trans_choice('my-blog::general.posts', 2));
-	}
+    public function testItShouldSeePostListPage()
+    {
+        $this->loginAs()
+            ->get(route('my-blog.posts.index'))
+            ->assertStatus(200)
+            ->assertSeeText(trans_choice('my-blog::general.posts', 2));
+    }
 
-	public function testItShouldSeePostCreatePage()
-	{
-		$this->loginAs()
-			->get(route('my-blog.posts.create'))
-			->assertStatus(200)
-			->assertSeeText(trans('general.title.new', ['type' => trans_choice('my-blog::general.posts', 1)]));
-	}
+    public function testItShouldSeePostCreatePage()
+    {
+        $this->loginAs()
+            ->get(route('my-blog.posts.create'))
+            ->assertStatus(200)
+            ->assertSeeText(trans('general.title.new', ['type' => trans_choice('my-blog::general.posts', 1)]));
+    }
 
-	public function testItShouldCreatePost()
-	{
-		$request = $this->getRequest();
+    public function testItShouldCreatePost()
+    {
+        $request = $this->getRequest();
 
-		$this->loginAs()
-			->post(route('my-blog.posts.store'), $request)
-			->assertStatus(200);
+        $this->loginAs()
+            ->post(route('my-blog.posts.store'), $request)
+            ->assertStatus(200);
 
-		$this->assertFlashLevel('success');
+        $this->assertFlashLevel('success');
 
-		$this->assertDatabaseHas('my_blog_posts', $request);
-	}
+        $this->assertDatabaseHas('my_blog_posts', $request);
+    }
 
-	public function testItShouldSeePostUpdatePage()
-	{
-		$request = $this->getRequest();
+    public function testItShouldSeePostUpdatePage()
+    {
+        $request = $this->getRequest();
 
         $post = $this->dispatch(new CreatePost($request));
 
-		$this->loginAs()
-			->get(route('my-blog.posts.edit', $post->id))
-			->assertStatus(200)
-			->assertSee($post->name);
-	}
+        $this->loginAs()
+            ->get(route('my-blog.posts.edit', $post->id))
+            ->assertStatus(200)
+            ->assertSee($post->name);
+    }
 
-	public function testItShouldUpdatePost()
-	{
-		$request = $this->getRequest();
+    public function testItShouldUpdatePost()
+    {
+        $request = $this->getRequest();
 
-		$post = $this->dispatch(new CreatePost($request));
+        $post = $this->dispatch(new CreatePost($request));
 
-		$request['name'] = $this->faker->text(15);
+        $request['name'] = $this->faker->text(15);
 
-		$this->loginAs()
-			->patch(route('my-blog.posts.update', $post->id), $request)
-			->assertStatus(200)
-			->assertSee($request['name']);
+        $this->loginAs()
+            ->patch(route('my-blog.posts.update', $post->id), $request)
+            ->assertStatus(200)
+            ->assertSee($request['name']);
 
-		$this->assertFlashLevel('success');
+        $this->assertFlashLevel('success');
 
-		$this->assertDatabaseHas('my_blog_posts', $request);
-	}
+        $this->assertDatabaseHas('my_blog_posts', $request);
+    }
 
-	public function testItShouldDeletePost()
-	{
-		$request = $this->getRequest();
+    public function testItShouldDeletePost()
+    {
+        $request = $this->getRequest();
 
-		$post = $this->dispatch(new CreatePost($request));
+        $post = $this->dispatch(new CreatePost($request));
 
-		$this->loginAs()
-			->delete(route('my-blog.posts.destroy', $post->id))
-			->assertStatus(200);
+        $this->loginAs()
+            ->delete(route('my-blog.posts.destroy', $post->id))
+            ->assertStatus(200);
 
-		$this->assertFlashLevel('success');
+        $this->assertFlashLevel('success');
 
-		$this->assertSoftDeleted('my_blog_posts', $request);
-	}
+        $this->assertSoftDeleted('my_blog_posts', $request);
+    }
 
     public function testItShouldExportPosts()
     {
