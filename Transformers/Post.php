@@ -11,7 +11,7 @@ class Post extends TransformerAbstract
     /**
      * @var array
      */
-    protected $defaultIncludes = ['comments', 'category'];
+    protected $defaultIncludes = ['category', 'comments'];
 
     /**
      * @param  Model $model
@@ -36,19 +36,6 @@ class Post extends TransformerAbstract
      * @param  Model $model
      * @return mixed
      */
-    public function includeComments(Model $model)
-    {
-        if (!$model->comments) {
-            return $this->null();
-        }
-
-        return $this->collection($model->comments, new Comment());
-    }
-
-    /**
-     * @param  Model $model
-     * @return mixed
-     */
     public function includeCategory(Model $model)
     {
         if (!$model->category) {
@@ -56,5 +43,18 @@ class Post extends TransformerAbstract
         }
 
         return $this->item($model->category, new Category());
+    }
+
+    /**
+     * @param  Model $model
+     * @return mixed
+     */
+    public function includeComments(Model $model)
+    {
+        if (!$model->comments) {
+            return $this->null();
+        }
+
+        return $this->collection($model->comments, new Comment());
     }
 }
