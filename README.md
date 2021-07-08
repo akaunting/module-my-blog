@@ -15,7 +15,7 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 
 ## To Do
 
-- [ ] API
+- [x] API
 - [x] Bulk Actions
 - [x] Category Type
 - [x] Client Portal
@@ -25,9 +25,9 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [ ] Email Templates
 - [x] Exports
 - [x] Imports
-- [ ] Notifications
 - [x] Jobs
 - [x] Menu (Admin+Portal)
+- [ ] Notifications
 - [x] Ownership
 - [x] Permissions
 - [ ] Reports
