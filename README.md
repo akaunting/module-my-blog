@@ -27,7 +27,7 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [ ] Email Templates
 - [x] Exports ([controller](Http/Controllers/Posts.php#L238), [class](Exports))
 - [x] Imports ([controller](Http/Controllers/Posts.php#L111), [class](Imports))
-- [x] Jobs ([bulk action](BulkActions/Posts.php#L47), [ui](Http/Controllers/Posts.php#L216), [api](Http/Controllers/Api/Posts.ph))
+- [x] Jobs ([bulk action](BulkActions/Posts.php#L47), [ui](Http/Controllers/Posts.php#L216), [api](Http/Controllers/Api/Posts.php#L104))
 - [x] Menu ([admin](Listeners/AddToAdminMenu.php), [portal](Listeners/AddToPortalMenu.php))
 - [ ] Notifications
 - [x] Ownership (`created_by` [field](Models/Post.php#L14), [controller](Http/Controllers/Posts.php#L26), [blade](Resources/views/posts/index.blade.php#L54))
