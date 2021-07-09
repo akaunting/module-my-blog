@@ -1,6 +1,6 @@
 {
     "alias": "my-blog",
-    "icon": "fa fa-cog",
+    "icon": "fa fa-pen",
     "version": "1.0.0",
     "active": 1,
     "providers": [
@@ -11,7 +11,16 @@
     "files": [],
     "requires": [],
     "reports": [],
-    "widgets": [],
+    "widgets": [
+        "Modules\\MyBlog\\Widgets\\TotalAuthors",
+        "Modules\\MyBlog\\Widgets\\TotalPosts",
+        "Modules\\MyBlog\\Widgets\\TotalComments",
+        "Modules\\MyBlog\\Widgets\\PostsByCategory",
+        "Modules\\MyBlog\\Widgets\\CommentsByPost",
+        "Modules\\MyBlog\\Widgets\\TopAuthors",
+        "Modules\\MyBlog\\Widgets\\LatestPosts",
+        "Modules\\MyBlog\\Widgets\\LatestComments"
+    ],
     "settings": [],
     "extra-modules": {}
 }

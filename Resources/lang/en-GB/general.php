@@ -11,8 +11,8 @@ return [
 
     'demo' => [
         'categories' => [
-            'php'           => 'PHP',
-            'laravel'       => 'Laravel',
+            'php'       => 'PHP',
+            'laravel'   => 'Laravel',
         ],
     ],
 
