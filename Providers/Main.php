@@ -2,6 +2,8 @@
 
 namespace Modules\MyBlog\Providers;
 
+use App\Models\Auth\User;
+use App\Models\Setting\Category;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as Provider;
@@ -30,6 +32,7 @@ class Main extends Provider
         $this->loadTranslations();
         $this->loadMigrations();
         $this->loadConfig();
+        $this->loadDynamicRelationships();
     }
 
     /**
@@ -89,6 +92,26 @@ class Main extends Provider
         }
 
         $this->mergeConfigFrom(__DIR__ . '/../Config/my-blog.php', 'my-blog');
+    }
+
+    /**
+     * Load dynamic relationships.
+     *
+     * @return void
+     */
+    public function loadDynamicRelationships()
+    {
+        User::resolveRelationUsing('my_blog_posts', function ($user) {
+            return $user->hasMany('Modules\MyBlog\Models\Post', 'created_by', 'id');
+        });
+
+        User::resolveRelationUsing('my_blog_comments', function ($user) {
+            return $user->hasMany('Modules\MyBlog\Models\Comment', 'created_by', 'id');
+        });
+
+        Category::resolveRelationUsing('my_blog_posts', function ($category) {
+            return $category->hasMany('Modules\MyBlog\Models\Post', 'category_id', 'id');
+        });
     }
 
     /**

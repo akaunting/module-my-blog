@@ -21,7 +21,9 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [x] Client Portal
 - [x] ~~Contact Type~~
 - [x] CRUD
+- [x] Dashboard
 - [x] ~~Document Type~~
+- [x] Dynamic Relationships
 - [ ] Email Templates
 - [x] Exports
 - [x] Imports
@@ -33,9 +35,10 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [ ] Reports
 - [x] Search String
 - [x] Seeds
+- [ ] Settings
 - [x] Tests
 - [x] ~~Transaction Type~~
-- [ ] Widgets
+- [x] Widgets
 
 `Contact`, `Document`, and `Transaction` types are not applicable for this module.
 

@@ -17,6 +17,7 @@ class Install extends Seeder
         Model::unguard();
 
         $this->call(Categories::class);
+        $this->call(Dashboards::class);
 
         Model::reguard();
     }
