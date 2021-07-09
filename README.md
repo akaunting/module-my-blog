@@ -13,32 +13,32 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - Install dependencies: `composer install ; npm install ; npm run dev`
 - [Install](https://developer.akaunting.com/documentation/modules/#67474166c92e) the module: `php artisan module:install my-blog 1`
 
-## To Do
+## Features
 
-- [x] API
-- [x] Bulk Actions
-- [x] Category Type
+- [x] API ([route](Routes/api.php), [controller](Http/Controllers/Api), [transformer](Transformers))
+- [x] Bulk Actions ([class](BulkActions), [blade](Resources/views/posts/index.blade.php#L27), [vuejs](Resources/assets/js/my-blog.js))
+- [x] Category Type ([provider](Providers/Main.php#L85), [config](Config/type.php), [model](Models/Post.php#L23))
 - [x] Client Portal
 - [x] ~~Contact Type~~
 - [x] CRUD
-- [x] Dashboard
+- [x] Dashboard ([seed](Database/Seeds/Install.php#L20))
 - [x] ~~Document Type~~
-- [x] Dynamic Relationships
+- [x] Dynamic Relationships ([define](Providers/Main.php#L35), [use](Widgets/PostsByCategory.php#L18))
 - [ ] Email Templates
-- [x] Exports
-- [x] Imports
-- [x] Jobs
-- [x] Menu (Admin+Portal)
+- [x] Exports ([controller](Http/Controllers/Posts.php#L238), [class](Exports))
+- [x] Imports ([controller](Http/Controllers/Posts.php#L111), [class](Imports))
+- [x] Jobs ([bulk action](BulkActions/Posts.php#L47), [ui](Http/Controllers/Posts.php#L216), [api](Http/Controllers/Api/Posts.ph))
+- [x] Menu ([admin](Listeners/AddToAdminMenu.php), [portal](Listeners/AddToPortalMenu.php))
 - [ ] Notifications
-- [x] Ownership
-- [x] Permissions
+- [x] Ownership (`created_by` [field](Models/Post.php#L14), [controller](Http/Controllers/Posts.php#L26), [blade](Resources/views/posts/index.blade.php#L54))
+- [x] Permissions ([listener](Listeners/FinishInstallation.php#L32))
 - [ ] Reports
-- [x] Search String
-- [x] Seeds
+- [x] Search String ([provider](Providers/Main.php#L85), [config](Config/search-string.php#L5), [blade](Resources/views/posts/index.blade.php#L24))
+- [x] Seeds ([listener](Listeners/FinishInstallation.php#L29), [seeder](Database/Seeds/Install.php))
 - [ ] Settings
-- [x] Tests
+- [x] Tests ([feature](Tests/Feature))
 - [x] ~~Transaction Type~~
-- [x] Widgets
+- [x] Widgets ([define](module.json#L14))
 
 `Contact`, `Document`, and `Transaction` types are not applicable for this module.
 
