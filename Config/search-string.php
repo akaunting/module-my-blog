@@ -2,7 +2,7 @@
 
 return [
 
-    'Modules\MyBlog\Models\Comment' => [
+    'Modules\MyBlog\Models\Post' => [
         'columns' => [
             'id',
             'name' => ['searchable' => true],
