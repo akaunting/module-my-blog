@@ -25,9 +25,9 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [x] ~~Document Type~~
 - [x] Dynamic Relationships ([define](Providers/Main.php#L35), [use](Widgets/PostsByCategory.php#L18))
 - [ ] Email Templates
-- [x] Exports ([controller](Http/Controllers/Posts.php#L238), [class](Exports))
-- [x] Imports ([controller](Http/Controllers/Posts.php#L111), [class](Imports))
-- [x] Jobs ([bulk action](BulkActions/Posts.php#L47), [ui](Http/Controllers/Posts.php#L216), [api](Http/Controllers/Api/Posts.php#L104))
+- [x] Exports ([controller](Http/Controllers/Posts.php#L244), [class](Exports))
+- [x] Imports ([controller](Http/Controllers/Posts.php#L117), [class](Imports))
+- [x] Jobs ([bulk action](BulkActions/Posts.php#L47), [ui](Http/Controllers/Posts.php#L222), [api](Http/Controllers/Api/Posts.php#L104))
 - [x] Menu ([admin](Listeners/AddToAdminMenu.php), [portal](Listeners/AddToPortalMenu.php))
 - [ ] Notifications
 - [x] Ownership (`created_by` [field](Models/Post.php#L14), [controller](Http/Controllers/Posts.php#L26), [blade](Resources/views/posts/index.blade.php#L54))
@@ -35,7 +35,7 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [ ] Reports
 - [x] Search String ([provider](Providers/Main.php#L85), [config](Config/search-string.php#L5), [blade](Resources/views/posts/index.blade.php#L24))
 - [x] Seeds ([listener](Listeners/FinishInstallation.php#L29), [seeder](Database/Seeds/Install.php))
-- [x] Settings ([define](module.json#L24), [permission](Listeners/FinishInstallation.php#L38), [use](Http/Controllers/Posts.php#L40))
+- [x] Settings ([define](module.json#L24), [permission](Listeners/FinishInstallation.php#L38), [use](Http/Controllers/Posts.php#L38))
 - [x] Tests ([feature](Tests/Feature))
 - [x] ~~Transaction Type~~
 - [x] Widgets ([define](module.json#L14))
