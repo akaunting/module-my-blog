@@ -35,7 +35,7 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [ ] Reports
 - [x] Search String ([provider](Providers/Main.php#L85), [config](Config/search-string.php#L5), [blade](Resources/views/posts/index.blade.php#L24))
 - [x] Seeds ([listener](Listeners/FinishInstallation.php#L29), [seeder](Database/Seeds/Install.php))
-- [ ] Settings
+- [x] Settings ([define](module.json#L24), [permission](Listeners/FinishInstallation.php#L38), [use](Http/Controllers/Posts.php#L40))
 - [x] Tests ([feature](Tests/Feature))
 - [x] ~~Transaction Type~~
 - [x] Widgets ([define](module.json#L14))
