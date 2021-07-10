@@ -21,6 +21,33 @@
         "Modules\\MyBlog\\Widgets\\LatestPosts",
         "Modules\\MyBlog\\Widgets\\LatestComments"
     ],
-    "settings": [],
+    "settings": [
+        {
+            "type": "textGroup",
+            "name": "header",
+            "title": "my-blog::general.header",
+            "icon": "fa fa-user",
+            "attributes": {
+                "required": "required"
+            },
+            "rules": "required|string"
+        },
+        {
+            "type": "radioGroup",
+            "name": "enable_comments",
+            "title": "my-blog::general.enable_comments",
+            "enable": "general.yes",
+            "disable": "general.no",
+            "attributes": {},
+            "rules": "integer|boolean"
+        },
+        {
+            "type": "textareaGroup",
+            "name": "meta_description",
+            "title": "my-blog::general.meta_description",
+            "attributes": {},
+            "rules": "nullable|string"
+        }
+    ],
     "extra-modules": {}
 }

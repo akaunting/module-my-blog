@@ -66,50 +66,52 @@
         </div>
     </div>
 
-    <h3>{{ trans_choice('my-blog::general.comments', 2) }}</h3>
+    @if (setting('my-blog.enable_comments'))
+        <h3>{{ trans_choice('my-blog::general.comments', 2) }}</h3>
 
-    <div class="card">
-        <div class="table-responsive">
-            <table class="table table-flush table-hover" id="tbl-comments">
-                <thead class="thead-light">
-                    <tr class="row table-head-line">
-                        <th class="col-md-3">{{ trans_choice('general.users', 1) }}</th>
-                        <th class="col-md-7">{{ trans('general.description') }}</th>
-                        <th class="col-md-2 text-center">{{ trans('general.actions') }}</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach($comments as $comment)
-                        <tr class="row align-items-center border-top-1 tr-py">
-                            <td class="col-md-3">{{ $comment->owner->name }}</td>
-                            <td class="col-md-7  long-texts">{{ $comment->description }}</td>
-                            <td class="col-md-2 text-center">
-                                <div class="dropdown">
-                                    <a class="btn btn-neutral btn-sm text-light items-align-center p-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h text-muted"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="{{ route('my-blog.comments.edit', $comment->id) }}">{{ trans('general.edit') }}</a>
-                                        @can('delete-my-blog-comments')
-                                            <div class="dropdown-divider"></div>
-                                            {!! Form::deleteLink($comment, 'my-blog.comments.destroy', 'my-blog::general.comments') !!}
-                                        @endcan
-                                    </div>
-                                </div>
-                            </td>
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-flush table-hover" id="tbl-comments">
+                    <thead class="thead-light">
+                        <tr class="row table-head-line">
+                            <th class="col-md-3">{{ trans_choice('general.users', 1) }}</th>
+                            <th class="col-md-7">{{ trans('general.description') }}</th>
+                            <th class="col-md-2 text-center">{{ trans('general.actions') }}</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
 
-        <div class="card-footer py-4 table-action">
-            <div class="row">
-                @include('partials.admin.pagination', ['items' => $comments, 'type' => 'comments'])
+                    <tbody>
+                        @foreach($comments as $comment)
+                            <tr class="row align-items-center border-top-1 tr-py">
+                                <td class="col-md-3">{{ $comment->owner->name }}</td>
+                                <td class="col-md-7  long-texts">{{ $comment->description }}</td>
+                                <td class="col-md-2 text-center">
+                                    <div class="dropdown">
+                                        <a class="btn btn-neutral btn-sm text-light items-align-center p-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-h text-muted"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a class="dropdown-item" href="{{ route('my-blog.comments.edit', $comment->id) }}">{{ trans('general.edit') }}</a>
+                                            @can('delete-my-blog-comments')
+                                                <div class="dropdown-divider"></div>
+                                                {!! Form::deleteLink($comment, 'my-blog.comments.destroy', 'my-blog::general.comments') !!}
+                                            @endcan
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer py-4 table-action">
+                <div class="row">
+                    @include('partials.admin.pagination', ['items' => $comments, 'type' => 'comments'])
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
 
 @push('scripts_start')

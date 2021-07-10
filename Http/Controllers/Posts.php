@@ -35,10 +35,16 @@ class Posts extends Controller
      */
     public function show(Post $post)
     {
-        $post->load('category', 'comments');
+        if (setting('my-blog.enable_comments')) {
+            $post->load('category', 'comments');
 
-        $limit = (int) request('limit', setting('default.list_limit', '25'));
-        $comments = $this->paginate($post->comments->sortByDesc('created_at'), $limit);
+            $limit = (int) request('limit', setting('default.list_limit', '25'));
+            $comments = $this->paginate($post->comments->sortByDesc('created_at'), $limit);
+        } else {
+            $post->load('category');
+
+            $comments = [];
+        }
 
         return view('my-blog::posts.show', compact('post', 'comments'));
     }
