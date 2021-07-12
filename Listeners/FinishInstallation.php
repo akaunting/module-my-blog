@@ -35,7 +35,6 @@ class FinishInstallation
         $this->attachPermissionsToAdminRoles([
             $this->alias . '-posts' => 'c,r,u,d',
             $this->alias . '-comments' => 'c,r,u,d',
-            $this->alias . '-settings' => 'r',
         ]);
 
         // c=create, r=read, u=update, d=delete
