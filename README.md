@@ -32,13 +32,13 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [ ] Notifications
 - [x] Ownership (`created_by` [field](Models/Post.php#L14), [controller](Http/Controllers/Posts.php#L26), [blade](Resources/views/posts/index.blade.php#L54))
 - [x] Permissions ([listener](Listeners/FinishInstallation.php#L32))
-- [ ] Reports
+- [x] Reports ([define](module.json#L14), [report](Reports/PostSummary.php), [listener](Listeners/AddCategoriesToReport.php), [provider](Providers/Event.php#L14))
 - [x] Search String ([provider](Providers/Main.php#L85), [config](Config/search-string.php#L5), [blade](Resources/views/posts/index.blade.php#L24))
 - [x] Seeds ([listener](Listeners/FinishInstallation.php#L29), [seeder](Database/Seeds/Install.php))
-- [x] Settings ([define](module.json#L24), [use](Http/Controllers/Posts.php#L38))
+- [x] Settings ([define](module.json#L27), [use](Http/Controllers/Posts.php#L38))
 - [x] Tests ([feature](Tests/Feature))
 - [x] ~~Transaction Type~~
-- [x] Widgets ([define](module.json#L14))
+- [x] Widgets ([define](module.json#L17))
 
 `Contact`, `Document`, and `Transaction` types are not applicable for this module.
 
