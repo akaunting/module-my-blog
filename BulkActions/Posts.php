@@ -16,14 +16,12 @@ class Posts extends BulkAction
             'name' => 'general.enable',
             'message' => 'bulk_actions.message.enable',
             'path' =>  ['group' => 'my-blog', 'type' => 'posts'],
-            'type' => '*',
             'permission' => 'update-my-blog-posts',
         ],
         'disable' => [
             'name' => 'general.disable',
             'message' => 'bulk_actions.message.disable',
             'path' =>  ['group' => 'my-blog', 'type' => 'posts'],
-            'type' => '*',
             'permission' => 'update-my-blog-posts',
         ],
         'delete' => [
