@@ -10,7 +10,10 @@
     "aliases": {},
     "files": [],
     "requires": [],
-    "reports": [],
+    "reports": [
+        "Modules\\MyBlog\\Reports\\PostSummary",
+        "Modules\\MyBlog\\Reports\\CommentSummary"
+    ],
     "widgets": [
         "Modules\\MyBlog\\Widgets\\TotalAuthors",
         "Modules\\MyBlog\\Widgets\\TotalPosts",
