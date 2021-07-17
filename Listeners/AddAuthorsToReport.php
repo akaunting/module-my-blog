@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\MyBlog\Listeners;
+namespace Modules\MyBlog\Listeners;
 
 use App\Abstracts\Listeners\Report as Listener;
 use App\Events\Report\FilterApplying;
