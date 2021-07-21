@@ -15,7 +15,7 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 
 ## Features
 
-- [x] API ([route](Routes/api.php), [controller](Http/Controllers/Api), [transformer](Transformers))
+- [x] API ([provider](Providers/Main.php#L131), [route](Routes/api.php), [controller](Http/Controllers/Api), [transformer](Transformers))
 - [x] Bulk Actions ([class](BulkActions), [blade](Resources/views/posts/index.blade.php#L27), [vuejs](Resources/assets/js/my-blog.js))
 - [x] Category Type ([provider](Providers/Main.php#L85), [config](Config/type.php), [model](Models/Post.php#L23))
 - [x] Client Portal
