@@ -35,7 +35,9 @@
                 <tbody>
                     @foreach($posts as $post)
                         <tr class="row align-items-center border-top-1 tr-py">
-                            <td class="col-md-3">{{ $post->name }}</td>
+                            <td class="col-md-3">
+                                <a href="{{ route('portal.my-blog.posts.show', $post->id) }}">{{ $post->name }}</a>
+                            </td>
                             <td class="col-md-5 long-texts">{{ $post->description }}</td>
                             <td class="col-md-2">{{ $post->category->name }}</td>
                             <td class="col-md-2">{{ $post->enabled }}</td>
@@ -54,5 +56,5 @@
 @endsection
 
 @push('scripts_start')
-    <script src="{{ asset('modules/MyBlog/Resources/assets/js/my-blog.min.js?v=' . module_version('my-blog')) }}"></script>
+    <script src="{{ asset('modules/MyBlog/Resources/assets/js/posts.min.js?v=' . module_version('my-blog')) }}"></script>
 @endpush

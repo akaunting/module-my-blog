@@ -24,12 +24,13 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [x] Dashboard ([seed](Database/Seeds/Install.php#L20))
 - [x] ~~Document Type~~
 - [x] Dynamic Relationships ([define](Providers/Main.php#L35), [use](Widgets/PostsByCategory.php#L18))
-- [ ] Email Templates
+- [x] Email Templates ([seed](Database/Seeds/Install.php#L21), [content](Resources/lang/en-GB/email_templates.php))
 - [x] Exports ([controller](Http/Controllers/Posts.php#L244), [class](Exports))
 - [x] Imports ([controller](Http/Controllers/Posts.php#L117), [class](Imports))
 - [x] Jobs ([bulk action](BulkActions/Posts.php#L47), [ui](Http/Controllers/Posts.php#L222), [api](Http/Controllers/Api/Posts.php#L104))
 - [x] Menu ([admin](Listeners/AddToAdminMenu.php), [portal](Listeners/AddToPortalMenu.php))
-- [ ] Notifications
+- [x] Notifications ([trigger](Observers/Comment.php#L22), [class](Notifications/Comment.php))
+- [x] Observers ([define](module.json#L9), [provider](Providers/Observer.php), [class](Observers/Comment.php))
 - [x] Ownership (`created_by` [field](Models/Post.php#L14), [controller](Http/Controllers/Posts.php#L26), [blade](Resources/views/posts/index.blade.php#L54))
 - [x] Permissions ([listener](Listeners/FinishInstallation.php#L32))
 - [x] Reports ([define](module.json#L13), [report](Reports/PostSummary.php), [listener](Listeners/AddCategoriesToReport.php))

@@ -5,7 +5,8 @@
     "active": 1,
     "providers": [
         "Modules\\MyBlog\\Providers\\Event",
-        "Modules\\MyBlog\\Providers\\Main"
+        "Modules\\MyBlog\\Providers\\Main",
+        "Modules\\MyBlog\\Providers\\Observer"
     ],
     "aliases": {},
     "files": [],
@@ -28,7 +29,7 @@
         {
             "type": "textGroup",
             "name": "header",
-            "title": "my-blog::general.header",
+            "title": "my-blog::settings.header",
             "icon": "fa fa-user",
             "attributes": {
                 "required": "required"
@@ -38,7 +39,7 @@
         {
             "type": "radioGroup",
             "name": "enable_comments",
-            "title": "my-blog::general.enable_comments",
+            "title": "my-blog::settings.enable_comments",
             "enable": "general.yes",
             "disable": "general.no",
             "attributes": {},
@@ -47,7 +48,7 @@
         {
             "type": "textareaGroup",
             "name": "meta_description",
-            "title": "my-blog::general.meta_description",
+            "title": "my-blog::settings.meta_description",
             "attributes": {},
             "rules": "nullable|string"
         }

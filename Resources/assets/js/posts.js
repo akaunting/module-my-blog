@@ -26,7 +26,7 @@ const app = new Vue({
     data() {
         return {
             form: new Form('post'),
-            bulk_action: new BulkAction('my-blog/posts')
+            bulk_action: new BulkAction('posts')
         }
     },
 });
