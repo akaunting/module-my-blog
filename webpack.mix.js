@@ -11,5 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('Resources/assets/js/my-blog.js', 'Resources/assets/js/my-blog.min.js')
+mix.js('Resources/assets/js/posts.js', 'Resources/assets/js/posts.min.js')
+    .js('Resources/assets/js/comments.js', 'Resources/assets/js/comments.min.js')
     .sass('./../../resources/assets/sass/argon.scss', './../../public/css');

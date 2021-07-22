@@ -18,6 +18,7 @@ class Install extends Seeder
 
         $this->call(Categories::class);
         $this->call(Dashboards::class);
+        $this->call(EmailTemplates::class);
 
         Model::reguard();
     }

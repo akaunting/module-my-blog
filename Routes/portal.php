@@ -10,4 +10,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::portal('my-blog', function () {
     Route::resource('posts', 'Portal\Posts');
+    Route::post('comments', 'Portal\Comments@store')->name('comments.store');
 });

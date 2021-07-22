@@ -2,6 +2,6 @@
 /.vscode
 /.vagrant
 /node_modules
-/Resources/assets/js/my-blog.min.js
+/Resources/assets/js/*.min.js
 /storage/*.keyr
 /vendor
