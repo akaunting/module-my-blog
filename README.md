@@ -20,7 +20,7 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [x] Category Type ([provider](Providers/Main.php#L87), [config](Config/type.php), [model](Models/Post.php#L23))
 - [x] Client Portal
 - [x] ~~Contact Type~~
-- [x] Console Command ([provider](Providers/Main.php#L124), [command](Console/Inspire.php))
+- [x] Console Command ([provider](Providers/Main.php#L124), [class](Console/Inspire.php))
 - [x] CRUD
 - [x] Dashboard ([seed](Database/Seeds/Install.php#L20))
 - [x] ~~Document Type~~
