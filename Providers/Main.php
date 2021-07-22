@@ -4,6 +4,7 @@ namespace Modules\MyBlog\Providers;
 
 use App\Models\Auth\User;
 use App\Models\Setting\Category;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as Provider;
@@ -33,6 +34,7 @@ class Main extends Provider
         $this->loadMigrations();
         $this->loadConfig();
         $this->loadDynamicRelationships();
+        $this->loadCommands();
     }
 
     /**
@@ -111,6 +113,22 @@ class Main extends Provider
 
         Category::resolveRelationUsing('my_blog_posts', function ($category) {
             return $category->hasMany('Modules\MyBlog\Models\Post', 'category_id', 'id');
+        });
+    }
+
+    /**
+     * Load commands.
+     *
+     * @return void
+     */
+    public function loadCommands()
+    {
+        $this->commands(\Modules\MyBlog\Console\Inspire::class);
+
+        $this->app->booted(function () {
+            $schedule_time = config('app.schedule_time', '09:00');
+
+            app(Schedule::class)->command('my-blog:inspire')->dailyAt($schedule_time);
         });
     }
 

@@ -15,15 +15,16 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 
 ## Features
 
-- [x] API ([provider](Providers/Main.php#L131), [route](Routes/api.php), [controller](Http/Controllers/Api), [transformer](Transformers))
+- [x] API ([provider](Providers/Main.php#L149), [route](Routes/api.php), [controller](Http/Controllers/Api), [transformer](Transformers))
 - [x] Bulk Actions ([class](BulkActions), [blade](Resources/views/posts/index.blade.php#L27), [vuejs](Resources/assets/js/my-blog.js))
-- [x] Category Type ([provider](Providers/Main.php#L85), [config](Config/type.php), [model](Models/Post.php#L23))
+- [x] Category Type ([provider](Providers/Main.php#L87), [config](Config/type.php), [model](Models/Post.php#L23))
 - [x] Client Portal
 - [x] ~~Contact Type~~
+- [x] Console Command ([provider](Providers/Main.php#L124), [command](Console/Inspire.php))
 - [x] CRUD
 - [x] Dashboard ([seed](Database/Seeds/Install.php#L20))
 - [x] ~~Document Type~~
-- [x] Dynamic Relationships ([define](Providers/Main.php#L35), [use](Widgets/PostsByCategory.php#L18))
+- [x] Dynamic Relationships ([define](Providers/Main.php#L104), [use](Widgets/PostsByCategory.php#L18))
 - [x] Email Templates ([seed](Database/Seeds/Install.php#L21), [content](Resources/lang/en-GB/email_templates.php))
 - [x] Exports ([controller](Http/Controllers/Posts.php#L244), [class](Exports))
 - [x] Imports ([controller](Http/Controllers/Posts.php#L117), [class](Imports))
@@ -34,7 +35,7 @@ This is an example module with beyond CRUD functions for admin and is shown in t
 - [x] Ownership (`created_by` [field](Models/Post.php#L14), [controller](Http/Controllers/Posts.php#L26), [blade](Resources/views/posts/index.blade.php#L54))
 - [x] Permissions ([listener](Listeners/FinishInstallation.php#L32))
 - [x] Reports ([define](module.json#L13), [report](Reports/PostSummary.php), [listener](Listeners/AddCategoriesToReport.php))
-- [x] Search String ([provider](Providers/Main.php#L85), [config](Config/search-string.php#L5), [blade](Resources/views/posts/index.blade.php#L24))
+- [x] Search String ([provider](Providers/Main.php#L87), [config](Config/search-string.php#L5), [blade](Resources/views/posts/index.blade.php#L24))
 - [x] Seeds ([listener](Listeners/FinishInstallation.php#L29), [seeder](Database/Seeds/Install.php))
 - [x] Settings ([define](module.json#L27), [use](Http/Controllers/Posts.php#L38))
 - [x] Tests ([feature](Tests/Feature))
