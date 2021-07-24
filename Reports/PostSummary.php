@@ -7,7 +7,7 @@ use Modules\MyBlog\Models\Post;
 
 class PostSummary extends Report
 {
-    public $default_name = 'my-blog::reports.post_summary';
+    public $default_name = 'my-blog::reports.post_name';
 
     public $category = 'my-blog::general.name';
 

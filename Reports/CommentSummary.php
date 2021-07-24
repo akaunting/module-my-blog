@@ -7,7 +7,7 @@ use Modules\MyBlog\Models\Comment;
 
 class CommentSummary extends Report
 {
-    public $default_name = 'my-blog::reports.comment_summary';
+    public $default_name = 'my-blog::reports.comment_name';
 
     public $category = 'my-blog::general.name';
 
