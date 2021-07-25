@@ -35,6 +35,7 @@ class Main extends Provider
         $this->loadConfig();
         $this->loadDynamicRelationships();
         $this->loadCommands();
+        $this->scheduleCommands();
     }
 
     /**
@@ -124,7 +125,15 @@ class Main extends Provider
     public function loadCommands()
     {
         $this->commands(\Modules\MyBlog\Console\Inspire::class);
+    }
 
+    /**
+     * Schedule commands.
+     *
+     * @return void
+     */
+    public function scheduleCommands()
+    {
         $this->app->booted(function () {
             $schedule_time = config('app.schedule_time', '09:00');
 
