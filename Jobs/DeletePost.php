@@ -10,7 +10,7 @@ class DeletePost extends Job implements ShouldDelete
     public function handle(): bool
     {
         \DB::transaction(function () {
-            $this->deleteRelationships($this->post, ['comments']);
+            $this->deleteRelationships($this->model, ['comments']);
 
             $this->model->delete();
         });
