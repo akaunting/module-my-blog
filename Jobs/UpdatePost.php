@@ -3,37 +3,17 @@
 namespace Modules\MyBlog\Jobs;
 
 use App\Abstracts\Job;
+use App\Interfaces\Job\ShouldUpdate;
 use Modules\MyBlog\Models\Post;
 
-class UpdatePost extends Job
+class UpdatePost extends Job implements ShouldUpdate
 {
-    protected $post;
-
-    protected $request;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param  $post
-     * @param  $request
-     */
-    public function __construct($post, $request)
-    {
-        $this->post = $post;
-        $this->request = $this->getRequestInstance($request);
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return Post
-     */
-    public function handle()
+    public function handle(): Post
     {
         \DB::transaction(function () {
-            $this->post->update($this->request->all());
+            $this->model->update($this->request->all());
         });
 
-        return $this->post;
+        return $this->model;
     }
 }

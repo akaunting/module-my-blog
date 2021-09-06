@@ -3,36 +3,18 @@
 namespace Modules\MyBlog\Jobs;
 
 use App\Abstracts\Job;
+use App\Interfaces\Job\HasOwner;
+use App\Interfaces\Job\ShouldCreate;
 use Modules\MyBlog\Models\Post;
 
-class CreatePost extends Job
+class CreatePost extends Job implements HasOwner, ShouldCreate
 {
-    protected $post;
-
-    protected $request;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param  $request
-     */
-    public function __construct($request)
-    {
-        $this->request = $this->getRequestInstance($request);
-        $this->request->merge(['created_by' => user_id()]);
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return Post
-     */
-    public function handle()
+    public function handle(): Post
     {
         \DB::transaction(function () {
-            $this->post = Post::create($this->request->all());
+            $this->model = Post::create($this->request->all());
         });
 
-        return $this->post;
+        return $this->model;
     }
 }

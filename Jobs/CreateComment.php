@@ -3,36 +3,18 @@
 namespace Modules\MyBlog\Jobs;
 
 use App\Abstracts\Job;
+use App\Interfaces\Job\HasOwner;
+use App\Interfaces\Job\ShouldCreate;
 use Modules\MyBlog\Models\Comment;
 
-class CreateComment extends Job
+class CreateComment extends Job implements HasOwner, ShouldCreate
 {
-    protected $comment;
-
-    protected $request;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param  $request
-     */
-    public function __construct($request)
-    {
-        $this->request = $this->getRequestInstance($request);
-        $this->request->merge(['created_by' => user_id()]);
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return Comment
-     */
-    public function handle()
+    public function handle(): Comment
     {
         \DB::transaction(function () {
-            $this->comment = Comment::create($this->request->all());
+            $this->model = Comment::create($this->request->all());
         });
 
-        return $this->comment;
+        return $this->model;
     }
 }

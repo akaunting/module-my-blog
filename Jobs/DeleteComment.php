@@ -3,30 +3,14 @@
 namespace Modules\MyBlog\Jobs;
 
 use App\Abstracts\Job;
+use App\Interfaces\Job\ShouldDelete;
 
-class DeleteComment extends Job
+class DeleteComment extends Job implements ShouldDelete
 {
-    protected $comment;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param  $comment
-     */
-    public function __construct($comment)
-    {
-        $this->comment = $comment;
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    public function handle(): bool
     {
         \DB::transaction(function () {
-            $this->comment->delete();
+            $this->model->delete();
         });
 
         return true;
