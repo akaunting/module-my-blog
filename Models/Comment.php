@@ -11,7 +11,7 @@ class Comment extends Model
 
     protected $table = 'my_blog_comments';
 
-    protected $fillable = ['company_id', 'post_id', 'description', 'created_by'];
+    protected $fillable = ['company_id', 'post_id', 'description', 'created_from', 'created_by'];
 
     /**
      * Sortable columns.

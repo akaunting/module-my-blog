@@ -11,7 +11,7 @@ class Post extends Model
 
     protected $table = 'my_blog_posts';
 
-    protected $fillable = ['company_id', 'name', 'description', 'category_id', 'enabled', 'created_by'];
+    protected $fillable = ['company_id', 'name', 'description', 'category_id', 'enabled', 'created_from', 'created_by'];
 
     /**
      * Sortable columns.
