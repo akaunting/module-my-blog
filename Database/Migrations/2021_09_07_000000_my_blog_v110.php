@@ -14,11 +14,11 @@ class MyBlogV110 extends Migration
     public function up()
     {
         Schema::table('my_blog_posts', function (Blueprint $table) {
-            $table->string('created_from', 30)->nullable()->after('enabled');
+            $table->string('created_from', 100)->nullable()->after('enabled');
         });
 
         Schema::table('my_blog_comments', function (Blueprint $table) {
-            $table->string('created_from', 30)->nullable()->after('description');
+            $table->string('created_from', 100)->nullable()->after('description');
         });
     }
 
