@@ -1,5 +1,5 @@
 {
+    "/Resources/assets/js/posts.min.js": "/Resources/assets/js/posts.min.js",
     "/Resources/assets/js/comments.min.js": "/Resources/assets/js/comments.min.js",
-    "/../../public/css/argon.css": "/../../public/css/argon.css",
-    "/Resources/assets/js/posts.min.js": "/Resources/assets/js/posts.min.js"
+    "/public/css/argon.css": "/public/css/argon.css"
 }
