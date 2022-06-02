@@ -1,107 +1,122 @@
-@extends('layouts.admin')
+<x-layouts.admin>
+    <x-slot name="title">
+        {{ trans_choice('my-blog::general.posts', 2) }}
+    </x-slot>
 
-@section('title', trans_choice('my-blog::general.posts', 2))
+    <x-slot name="favorite"
+        title="{{ trans_choice('my-blog::general.posts', 2) }}"
+        icon="edit"
+        route="my-blog.posts.index"
+    ></x-slot>
 
-@section('new_button')
-    @can('create-my-blog-posts')
-        <a href="{{ route('my-blog.posts.create') }}" class="btn btn-success btn-sm">{{ trans('general.add_new') }}</a>
-        <a href="{{ route('import.create', ['my-blog', 'posts']) }}" class="btn btn-white btn-sm">{{ trans('import.import') }}</a>
-    @endcan
-    <a href="{{ route('my-blog.posts.export', request()->input()) }}" class="btn btn-white btn-sm">{{ trans('general.export') }}</a>
-@endsection
+    <x-slot name="buttons">
+        @can('create-my-blog-posts')
+            <x-link href="{{ route('my-blog.posts.create') }}" kind="primary">
+                {{ trans('general.title.new', ['type' => trans_choice('my-blog::general.posts', 1)]) }}
+            </x-link>
+        @endcan
+    </x-slot>
 
-@section('content')
-    @if ($posts->count() || request()->get('search', false))
-        <div class="card">
-            <div class="card-header border-bottom-0" :class="[{'bg-gradient-primary': bulk_action.show}]">
-                {!! Form::open([
-                    'method' => 'GET',
-                    'route' => 'my-blog.posts.index',
-                    'role' => 'form',
-                    'class' => 'mb-0'
-                ]) !!}
-                    <div class="align-items-center" v-if="!bulk_action.show">
-                        <x-search-string model="Modules\MyBlog\Models\Post" />
-                    </div>
+    <x-slot name="moreButtons">
+        <x-dropdown id="dropdown-more-actions">
+            <x-slot name="trigger">
+                <span class="material-icons">more_horiz</span>
+            </x-slot>
 
-                    {{ Form::bulkActionRowGroup('my-blog::general.posts', $bulk_actions, ['group' => 'my-blog', 'type' => 'posts']) }}
-                {!! Form::close() !!}
-            </div>
+            @can('create-my-blog-posts')
+                <x-dropdown.link href="{{ route('import.create', ['my-blog', 'posts']) }}">
+                    {{ trans('import.import') }}
+                </x-dropdown.link>
+            @endcan
 
-            <div class="table-responsive">
-                <table class="table table-flush table-hover">
-                    <thead class="thead-light">
-                        <tr class="row table-head-line">
-                            <th class="col-md-1 d-none d-sm-block">{{ Form::bulkActionAllGroup() }}</th>
-                            <th class="col-md-3">@sortablelink('name', trans('general.name'))</th>
-                            <th class="col-md-2">@sortablelink('owner', trans_choice('my-blog::general.authors', 1))</th>
-                            <th class="col-md-2">@sortablelink('category', trans_choice('general.categories', 1))</th>
-                            <th class="col-md-2 text-center">@sortablelink('enabled', trans('general.enabled'))</th>
-                            <th class="col-md-2 text-center">{{ trans('general.actions') }}</th>
-                        </tr>
-                    </thead>
+            <x-dropdown.link href="{{ route('my-blog.posts.export', request()->input()) }}">
+                {{ trans('general.export') }}
+            </x-dropdown.link>
+        </x-dropdown>
+    </x-slot>
 
-                    <tbody>
-                        @foreach($posts as $post)
-                            <tr class="row align-items-center border-top-1">
-                                <td class="col-md-1 d-none d-sm-block">
-                                    {{ Form::bulkActionGroup($post->id, $post->name) }}
-                                </td>
-                                <td class="col-md-3">
-                                    <a href="{{ route('my-blog.posts.show', $post->id) }}">{{ $post->name }}</a>
-                                </td>
-                                <td class="col-md-2">
-                                    <a href="{{ route('users.edit', $post->owner->id) }}">{{ $post->owner->name }}</a>
-                                </td>
-                                <td class="col-md-2">
-                                    {{ $post->category->name }}
-                                </td>
-                                <td class="col-md-2 text-center">
-                                    @if (user()->can('update-my-blog-posts'))
-                                        {{ Form::enabledGroup($post->id, $post->name, $post->enabled) }}
-                                    @else
-                                        @if ($post->enabled)
-                                            <badge rounded type="success" class="mw-60">{{ trans('general.yes') }}</badge>
-                                        @else
-                                            <badge rounded type="danger" class="mw-60">{{ trans('general.no') }}</badge>
-                                        @endif
-                                    @endif
-                                </td>
-                                <td class="col-md-2 text-center">
-                                    <div class="dropdown">
-                                        <a class="btn btn-neutral btn-sm text-light items-align-center p-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-h text-muted"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{{ route('my-blog.posts.edit', $post->id) }}">{{ trans('general.edit') }}</a>
-                                            @can('create-my-blog-posts')
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{ route('my-blog.posts.duplicate', $post->id) }}">{{ trans('general.duplicate') }}</a>
-                                            @endcan
-                                            @can('delete-my-blog-posts')
-                                                <div class="dropdown-divider"></div>
-                                                {!! Form::deleteLink($post, 'my-blog.posts.destroy', 'my-blog::general.posts') !!}
-                                            @endcan
+    <x-slot name="content">
+        @if ($posts->count() || request()->get('search', false))
+            <x-index.container>
+                <x-index.search
+                    search-string="Modules\MyBlog\Models\Post"
+                    bulk-action="Modules\MyBlog\BulkActions\Posts"
+                />
+
+                <x-table>
+                    <x-table.thead>
+                        <x-table.tr class="flex items-center px-1">
+                            <x-table.th class="ltr:pr-6 rtl:pl-6 hidden sm:table-cell" override="class">
+                                <x-index.bulkaction.all />
+                            </x-table.th>
+
+                            <x-table.th class="w-4/12">
+                                <x-slot name="first">
+                                    <x-sortablelink column="name" title="{{ trans('general.name') }}" />
+                                </x-slot>
+                                <x-slot name="second">
+                                    <x-sortablelink column="owner" title="{{ trans_choice('my-blog::general.authors', 1) }}" />
+                                </x-slot>
+                            </x-table.th>
+
+                            <x-table.th class="w-3/12 hidden sm:table-cell">
+                                <x-sortablelink column="category.name" title="{{ trans_choice('general.categories', 1) }}" />
+                            </x-table.th>
+
+                            <x-table.th class="w-5/12">
+                                <x-sortablelink column="description" title="{{ trans('general.description') }}" />
+                            </x-table.th>
+                        </x-table.tr>
+                    </x-table.thead>
+
+                    <x-table.tbody>
+                        @foreach($posts as $item)
+                            <x-table.tr href="{{ route('my-blog.posts.show', $item->id) }}">
+                                <x-table.td class="ltr:pr-6 rtl:pl-6 hidden sm:table-cell" override="class">
+                                    <x-index.bulkaction.single id="{{ $item->id }}" name="{{ $item->name }}" />
+                                </x-table.td>
+
+                                <x-table.td class="w-4/12 truncate">
+                                    <x-slot name="first" class="flex items-center font-bold" override="class">
+                                        <div class="truncate">
+                                            {{ $item->name }}
                                         </div>
+
+                                        @if (! $item->enabled)
+                                            <x-index.disable text="{{ trans_choice('my-blog::general.posts', 1) }}" />
+                                        @endif
+                                    </x-slot>
+                                    <x-slot name="second">
+                                        {{ $item->owner->name }}
+                                    </x-slot>
+                                </x-table.td>
+
+                                <x-table.td class="w-3/12 truncate hidden sm:table-cell">
+                                    <div class="flex items-center">
+                                        <x-index.category :model="$item->category" />
                                     </div>
-                                </td>
-                            </tr>
+                                </x-table.td>
+
+                                <x-table.td class="w-5/12 truncate">
+                                    <div class="w-32">
+                                        {{ $item->description }}
+                                    </div>
+                                </x-table.td>
+
+                                <x-table.td class="p-0" override="class">
+                                    <x-table.actions :model="$item" />
+                                </x-table.td>
+                            </x-table.tr>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    </x-table.tbody>
+                </x-table>
 
-            <div class="card-footer table-action">
-                <div class="row align-items-center">
-                    @include('partials.admin.pagination', ['items' => $posts])
-                </div>
-            </div>
-        </div>
-    @else
-        <x-empty-page page="items" />
-    @endif
-@endsection
+                <x-pagination :items="$posts" />
+            </x-index.container>
+        @else
+            <x-empty-page group="my-blog" page="posts" />
+        @endif
+    </x-slot>
 
-@push('scripts_start')
-    <script src="{{ asset('modules/MyBlog/Resources/assets/js/posts.min.js?v=' . module_version('my-blog')) }}"></script>
-@endpush
+    <x-script alias="my-blog" file="posts" />
+</x-layouts.admin>

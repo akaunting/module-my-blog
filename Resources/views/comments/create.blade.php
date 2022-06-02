@@ -1,38 +1,35 @@
-@extends('layouts.admin')
+<x-layouts.admin>
+    <x-slot name="title">{{ trans('general.title.new', ['type' => trans_choice('my-blog::general.comments', 1)]) }}</x-slot>
 
-@section('title', trans('general.title.new', ['type' => trans_choice('my-blog::general.comments', 1)]))
+    <x-slot name="favorite"
+        title="{{ trans('general.title.new', ['type' => trans_choice('my-blog::general.comments', 1)]) }}"
+        icon="chat"
+        route="my-blog.comments.create"
+    ></x-slot>
 
-@section('content')
-    <div class="card">
-        {!! Form::open([
-            'id' => 'comment',
-            'route' => 'my-blog.comments.store',
-            '@submit.prevent' => 'onSubmit',
-            '@keydown' => 'form.errors.clear($event.target.name)',
-            'files' => true,
-            'role' => 'form',
-            'class' => 'form-loading-button',
-            'novalidate' => true
-        ]) !!}
+    <x-slot name="content">
+        <x-form.container>
+            <x-form id="comment" route="my-blog.comments.store">
+                <x-form.section>
+                    <x-slot name="head">
+                        <x-form.section.head title="{{ trans('general.general') }}" description="{{ trans('my-blog::general.form_description.comment') }}" />
+                    </x-slot>
 
-            <div class="card-body">
-                <div class="row">
-                    {{ Form::selectGroup('post_id', trans_choice('my-blog::general.posts', 1), 'fa fa-pen', $posts) }}
+                    <x-slot name="body">
+                        <x-form.group.select name="post_id" label="{{ trans_choice('my-blog::general.posts', 1) }}" :options="$posts" />
 
-                    {{ Form::textareaGroup('description', trans('general.description')) }}
-                </div>
-            </div>
+                        <x-form.group.textarea name="description" label="{{ trans('general.description') }}" />
+                    </x-slot>
+                </x-form.section>
 
-            <div class="card-footer">
-                <div class="row save-buttons">
-                    {{ Form::saveButtons('my-blog.comments.index') }}
-                </div>
-            </div>
+                <x-form.section>
+                    <x-slot name="foot">
+                        <x-form.buttons cancel-route="my-blog.comments.index" />
+                    </x-slot>
+                </x-form.section>
+            </x-form>
+        </x-form.container>
+    </x-slot>
 
-        {!! Form::close() !!}
-    </div>
-@endsection
-
-@push('scripts_start')
-    <script src="{{ asset('modules/MyBlog/Resources/assets/js/comments.min.js?v=' . module_version('my-blog')) }}"></script>
-@endpush
+    <x-script alias="my-blog" file="comments" />
+</x-layouts.admin>

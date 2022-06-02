@@ -1,41 +1,37 @@
-@extends('layouts.admin')
+<x-layouts.admin>
+    <x-slot name="title">{{ trans('general.title.new', ['type' => trans_choice('my-blog::general.posts', 1)]) }}</x-slot>
 
-@section('title', trans('general.title.new', ['type' => trans_choice('my-blog::general.posts', 1)]))
+    <x-slot name="favorite"
+        title="{{ trans('general.title.new', ['type' => trans_choice('my-blog::general.posts', 1)]) }}"
+        icon="edit"
+        route="my-blog.posts.create"
+    ></x-slot>
 
-@section('content')
-    <div class="card">
-        {!! Form::open([
-            'route' => 'my-blog.posts.store',
-            'id' => 'post',
-            '@submit.prevent' => 'onSubmit',
-            '@keydown' => 'form.errors.clear($event.target.name)',
-            'files' => true,
-            'role' => 'form',
-            'class' => 'form-loading-button',
-            'novalidate' => true
-        ]) !!}
+    <x-slot name="content">
+        <x-form.container>
+            <x-form id="post" route="my-blog.posts.store">
+                <x-form.section>
+                    <x-slot name="head">
+                        <x-form.section.head title="{{ trans('general.general') }}" description="{{ trans('my-blog::general.form_description.post') }}" />
+                    </x-slot>
 
-            <div class="card-body">
-                <div class="row">
-                    {{ Form::textGroup('name', trans('general.name'), 'fa fa-font') }}
+                    <x-slot name="body">
+                        <x-form.group.text name="name" label="{{ trans('general.name') }}"  />
 
-                    {{ Form::selectRemoteAddNewGroup('category_id', trans_choice('general.categories', 1), 'fa fa-folder', $categories, null, ['path' => route('modals.categories.create') . '?type=post', 'remote_action' => route('categories.index'). '?search=type:post']) }}
+                        <x-form.group.category type="post" />
 
-                    {{ Form::textareaGroup('description', trans('general.description')) }}
+                        <x-form.group.textarea name="description" label="{{ trans('general.description') }}" />
+                    </x-slot>
+                </x-form.section>
 
-                    {{ Form::radioGroup('enabled', trans('general.enabled'), true) }}
-                </div>
-            </div>
+                <x-form.section>
+                    <x-slot name="foot">
+                        <x-form.buttons cancel-route="my-blog.posts.index" />
+                    </x-slot>
+                </x-form.section>
+            </x-form>
+        </x-form.container>
+    </x-slot>
 
-            <div class="card-footer">
-                <div class="row save-buttons">
-                    {{ Form::saveButtons('my-blog.posts.index') }}
-                </div>
-            </div>
-        {!! Form::close() !!}
-    </div>
-@endsection
-
-@push('scripts_start')
-    <script src="{{ asset('modules/MyBlog/Resources/assets/js/posts.min.js?v=' . module_version('my-blog')) }}"></script>
-@endpush
+    <x-script alias="my-blog" file="posts" />
+</x-layouts.admin>

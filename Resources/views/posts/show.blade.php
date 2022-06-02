@@ -1,119 +1,158 @@
-@extends('layouts.admin')
+<x-layouts.admin>
+    <x-slot name="title">
+        {{ $post->name }}
+    </x-slot>
 
-@section('title', $post->name)
+    <x-slot name="favorite"
+        title="{{ $post->name }}"
+        icon="edit"
+        :route="['my-blog.posts.show', $post->id]"
+    ></x-slot>
 
-@section('new_button')
-    <div class="dropup header-drop-top">
-        <button type="button" class="btn btn-white btn-sm" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-chevron-down"></i>&nbsp; {{ trans('general.more_actions') }}
-        </button>
+    <x-slot name="buttons">
+        @stack('new_button_start')
 
-        <div class="dropdown-menu" role="menu">
-            @can('update-my-blog-posts')
-                <a class="dropdown-item" href="{{ route('my-blog.posts.edit', $post->id) }}">
-                    {{ trans('general.edit') }}
-                </a>
-            @endcan
+        @can('create-my-blog-posts')
+        <x-link href="{{ route('my-blog.posts.create') }}" kind="primary">
+            {{ trans('general.title.new', ['type' => trans_choice('my-blog::general.posts', 1)]) }}
+        </x-link>
+        @endcan
+
+        @stack('edit_button_start')
+
+        @can('update-my-blog-posts')
+        <x-link href="{{ route('my-blog.posts.edit', $post->id) }}">
+            {{ trans('general.edit') }}
+        </x-link>
+        @endcan
+
+        @stack('more_button_start')
+
+        <x-dropdown id="dropdown-actions">
+            <x-slot name="trigger">
+                <span class="material-icons">more_horiz</span>
+            </x-slot>
+
+            @stack('duplicate_button_start')
 
             @can('create-my-blog-posts')
-                <a class="dropdown-item" href="{{ route('my-blog.posts.duplicate', $post->id) }}">
-                    {{ trans('general.duplicate') }}
-                </a>
+            <x-dropdown.link href="{{ route('my-blog.posts.duplicate', $post->id) }}">
+                {{ trans('general.duplicate') }}
+            </x-dropdown.link>
             @endcan
 
-            <div class="dropdown-divider"></div>
+            @stack('delete_button_start')
 
             @can('delete-my-blog-posts')
-                {!! Form::deleteLink($post, 'my-blog.posts.destroy', 'my-blog::general.posts') !!}
+            <x-delete-link :model="$post" route="my-blog.posts.destroy" />
             @endcan
-        </div>
-    </div>
 
-    @can('create-my-blog-posts')
-        <a href="{{ route('my-blog.posts.create') }}" class="btn btn-white btn-sm">{{ trans('general.add_new') }}</a>
-    @endcan
-@endsection
+            @stack('delete_button_end')
+        </x-dropdown>
 
-@section('content')
-    <div class="card">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card-header border-bottom-0 d-flex align-items-center">
-                    <strong>{{ trans_choice('general.categories', 1) }}:</strong>
-                    <span class="float-right ml-1">{{ $post->category->name }}</span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card-header border-bottom-0 d-flex align-items-center">
-                    <strong>{{ trans('general.enabled') }}:</strong>
-                    <span class="float-right ml-1">
-                        @if ($post->enabled)
-                            <badge rounded type="success" class="mw-60">{{ trans('general.yes') }}</badge>
-                        @else
-                            <badge rounded type="danger" class="mw-60">{{ trans('general.no') }}</badge>
+        @stack('more_button_end')
+    </x-slot>
+
+    <x-slot name="content">
+        <x-show.container>
+            <x-show.content>
+
+                <x-show.content.left>
+                    @stack('category_start')
+
+                    <div class="flex flex-col text-sm mb-5">
+                        <div class="font-medium">
+                            {{ trans_choice('general.categories', 1) }}
+                        </div>
+
+                        <span>
+                            {{ $post->category->name }}
+                        </span>
+                    </div>
+
+                    @stack('status_start')
+
+                    <div class="flex flex-col text-sm mb-5">
+                        <div class="font-medium">
+                            {{ trans('general.enabled') }}
+                        </div>
+
+                        <span>
+                            @if ($post->enabled)
+                                {{ trans('general.yes') }}
+                            @else
+                                {{ trans('general.no') }}
+                            @endif
+                        </span>
+                    </div>
+
+                    @stack('status_end')
+                </x-show.content.left>
+
+                <x-show.content.right>
+                    <div class="w-8/12 pl-12">
+                        <span>{{ $post->description }}</span>
+
+                        @if (setting('my-blog.enable_comments'))
+                            <h3 class="pt-10">{{ trans_choice('my-blog::general.comments', 2) }}</h3>
+
+                            <x-table>
+                                <x-table.thead>
+                                    <x-table.tr class="flex items-center px-1">
+                                        <x-table.th class="w-4/12">
+                                            <x-slot name="first">
+                                                <x-sortablelink
+                                                    column="created_at"
+                                                    title="{{ trans('general.date') }}"
+                                                    :query="['filter' => 'active, visible']"
+                                                    :arguments="['class' => 'col-aka', 'rel' => 'nofollow']"
+                                                />
+                                            </x-slot>
+                                            <x-slot name="second">
+                                                <x-sortablelink column="owner" title="{{ trans_choice('my-blog::general.authors', 1) }}" />
+                                            </x-slot>
+                                        </x-table.th>
+
+                                        <x-table.th class="w-8/12">
+                                            <x-sortablelink column="description" title="{{ trans('general.description') }}" />
+                                        </x-table.th>
+                                    </x-table.tr>
+                                </x-table.thead>
+
+                                <x-table.tbody>
+                                    @foreach($comments as $item)
+                                        <x-table.tr href="{{ route('my-blog.comments.edit', $item->id) }}" data-table-list class="relative flex items-center border-b hover:bg-gray-100 px-1 group">
+                                            <x-table.td class="w-4/12 truncate">
+                                                <x-slot name="first" class="flex font-bold" override="class">
+                                                    <x-date date="{{ $item->created_at }}" />
+                                                </x-slot>
+                                                <x-slot name="second">
+                                                    {{ $item->owner->name }}
+                                                </x-slot>
+                                            </x-table.td>
+
+                                            <x-table.td class="w-8/12 truncate">
+                                                <div class="w-32">
+                                                    {{ $item->description }}
+                                                </div>
+                                            </x-table.td>
+
+                                            <x-table.td class="p-0" override="class">
+                                                <x-table.actions :model="$item" />
+                                            </x-table.td>
+                                        </x-table.tr>
+                                    @endforeach
+                                </x-table.tbody>
+                            </x-table>
+
+                            <x-pagination :items="$comments" />
                         @endif
-                    </span>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card-header border-bottom-0 pb-0">
-                    <strong>{{ trans('general.description') }}:</strong>
-                </div>
-                <div class="card-header border-bottom-0 pt-0">
-                    <span>{{ $post->description }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </div>
+                </x-show.content.right>
 
-    @if (setting('my-blog.enable_comments'))
-        <h3>{{ trans_choice('my-blog::general.comments', 2) }}</h3>
+            </x-show.content>
+        </x-show.container>
+    </x-slot>
 
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table table-flush table-hover" id="tbl-comments">
-                    <thead class="thead-light">
-                        <tr class="row table-head-line">
-                            <th class="col-md-3">{{ trans_choice('general.users', 1) }}</th>
-                            <th class="col-md-7">{{ trans('general.description') }}</th>
-                            <th class="col-md-2 text-center">{{ trans('general.actions') }}</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($comments as $comment)
-                            <tr class="row align-items-center border-top-1 tr-py">
-                                <td class="col-md-3">{{ $comment->owner->name }}</td>
-                                <td class="col-md-7  long-texts">{{ $comment->description }}</td>
-                                <td class="col-md-2 text-center">
-                                    <div class="dropdown">
-                                        <a class="btn btn-neutral btn-sm text-light items-align-center p-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-h text-muted"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{{ route('my-blog.comments.edit', $comment->id) }}">{{ trans('general.edit') }}</a>
-                                            @can('delete-my-blog-comments')
-                                                <div class="dropdown-divider"></div>
-                                                {!! Form::deleteLink($comment, 'my-blog.comments.destroy', 'my-blog::general.comments') !!}
-                                            @endcan
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="card-footer py-4 table-action">
-                <div class="row">
-                    @include('partials.admin.pagination', ['items' => $comments, 'type' => 'comments'])
-                </div>
-            </div>
-        </div>
-    @endif
-@endsection
-
-@push('scripts_start')
-    <script src="{{ asset('modules/MyBlog/Resources/assets/js/posts.min.js?v=' . module_version('my-blog')) }}"></script>
-@endpush
+    <x-script alias="my-blog" file="posts" />
+</x-layouts.admin>

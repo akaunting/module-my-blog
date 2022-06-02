@@ -3,11 +3,14 @@
 namespace Modules\MyBlog\Database\Seeds;
 
 use App\Abstracts\Model;
-use App\Models\Setting\Category;
+use App\Jobs\Setting\CreateCategory;
+use App\Traits\Jobs;
 use Illuminate\Database\Seeder;
 
 class Categories extends Seeder
 {
+    use Jobs;
+
     public function run()
     {
         Model::unguard();
@@ -39,7 +42,9 @@ class Categories extends Seeder
         ];
 
         foreach ($categories as $category) {
-            Category::firstOrCreate($category);
+            $category['created_from'] = 'my-blog::seed';
+
+            $this->dispatch(new CreateCategory($category));
         }
     }
 }

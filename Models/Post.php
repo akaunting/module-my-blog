@@ -18,7 +18,7 @@ class Post extends Model
      *
      * @var array
      */
-    public $sortable = ['name', 'category', 'description', 'enabled'];
+    public $sortable = ['name', 'category.name', 'description', 'enabled'];
 
     public function category()
     {
@@ -28,6 +28,41 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany('Modules\MyBlog\Models\Comment');
+    }
+
+    /**
+     * Get the line actions.
+     *
+     * @return array
+     */
+    public function getLineActionsAttribute()
+    {
+        $actions = [];
+
+        $actions[] = [
+            'title' => trans('general.edit'),
+            'icon' => 'edit',
+            'url' => route('my-blog.posts.edit', $this->id),
+            'permission' => 'update-my-blog-posts',
+        ];
+
+        $actions[] = [
+            'title' => trans('general.duplicate'),
+            'icon' => 'file_copy',
+            'url' => route('my-blog.posts.duplicate', $this->id),
+            'permission' => 'create-my-blog-posts',
+        ];
+
+        $actions[] = [
+            'type' => 'delete',
+            'title' => trans_choice('my-blog::general.posts', 1),
+            'icon' => 'delete',
+            'route' => 'my-blog.posts.destroy',
+            'permission' => 'delete-my-blog-posts',
+            'model' => $this,
+        ];
+
+        return $actions;
     }
 
     /**

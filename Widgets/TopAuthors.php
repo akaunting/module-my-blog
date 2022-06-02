@@ -9,6 +9,12 @@ class TopAuthors extends Widget
 {
     public $default_name = 'my-blog::widgets.top_authors';
 
+    public $default_settings = [
+        'width' => 'w-full lg:w-1/3 px-6',
+    ];
+
+    public $description = 'my-blog::widgets.description.top_authors';
+
     public function show()
     {
         $query = User::withCount('my_blog_posts')->orderBy('my_blog_posts_count', 'desc');

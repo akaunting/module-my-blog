@@ -9,6 +9,14 @@ class LatestPosts extends Widget
 {
     public $default_name = 'my-blog::widgets.latest_posts';
 
+    public $default_settings = [
+        'width' => 'w-full lg:w-1/3 px-6',
+    ];
+
+    public $description = 'my-blog::widgets.description.latest_posts';
+
+    public $report_class = 'Modules\MyBlog\Reports\PostSummary';
+
     public function show()
     {
         $query = Post::with('category')->enabled()->orderBy('created_at', 'desc')->take(5);

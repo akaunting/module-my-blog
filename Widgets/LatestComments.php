@@ -9,6 +9,14 @@ class LatestComments extends Widget
 {
     public $default_name = 'my-blog::widgets.latest_comments';
 
+    public $default_settings = [
+        'width' => 'w-full lg:w-1/3 px-6',
+    ];
+
+    public $description = 'my-blog::widgets.description.latest_comments';
+
+    public $report_class = 'Modules\MyBlog\Reports\CommentSummary';
+
     public function show()
     {
         $query = Comment::with('owner')->orderBy('created_at', 'desc')->take(5);

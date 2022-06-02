@@ -34,6 +34,7 @@ class Dashboards extends Seeder
             'name' => trans('my-blog::general.name'),
             'all_users' => true,
             'default_widgets' => 'my-blog',
+            'created_from' => 'my-blog::seed',
         ]));
     }
 }

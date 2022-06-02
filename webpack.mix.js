@@ -18,5 +18,4 @@ mix.options({
     })
     .js('Resources/assets/js/posts.js', 'Resources/assets/js/posts.min.js')
     .js('Resources/assets/js/comments.js', 'Resources/assets/js/comments.min.js')
-    .sass('./../../resources/assets/sass/argon.scss', './../../public/css')
     .vue();

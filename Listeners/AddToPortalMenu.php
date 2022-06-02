@@ -20,7 +20,7 @@
         $event->menu->add([
             'route' => ['portal.my-blog.posts.index', []],
             'title' => trans_choice('my-blog::general.posts', 2),
-            'icon' => 'fas fa-pen',
+            'icon' => 'edit',
             'order' => 40,
         ]);
      }

@@ -3,11 +3,14 @@
 namespace Modules\MyBlog\Database\Seeds;
 
 use App\Abstracts\Model;
-use App\Models\Common\Report;
+use App\Jobs\Common\CreateReport;
+use App\Traits\Jobs;
 use Illuminate\Database\Seeder;
 
 class Reports extends Seeder
 {
+    use Jobs;
+
     /**
      * Run the database seeds.
      *
@@ -32,19 +35,21 @@ class Reports extends Seeder
                 'class' => 'Modules\MyBlog\Reports\PostSummary',
                 'name' => trans('my-blog::reports.post_name'),
                 'description' => trans('my-blog::reports.post_description'),
-                'settings' => ['group' => 'category', 'period' => 'monthly', 'chart' => 'line'],
+                'settings' => ['group' => 'category', 'period' => 'monthly'],
             ],
             [
                 'company_id' => $company_id,
                 'class' => 'Modules\MyBlog\Reports\CommentSummary',
                 'name' => trans('my-blog::reports.comment_name'),
                 'description' => trans('my-blog::reports.comment_description'),
-                'settings' => ['group' => 'post', 'period' => 'monthly', 'chart' => 'line'],
+                'settings' => ['group' => 'post', 'period' => 'monthly'],
             ],
         ];
 
         foreach ($rows as $row) {
-            Report::create($row);
+            $row['created_from'] = 'core::seed';
+
+            $this->dispatch(new CreateReport($row));
         }
     }
 }

@@ -9,9 +9,9 @@ class PostsByCategory extends Widget
 {
     public $default_name = 'my-blog::widgets.posts_by_category';
 
-    public $default_settings = [
-        'width' => 'col-md-6',
-    ];
+    public $description = 'my-blog::widgets.description.posts_by_category';
+
+    public $report_class = 'Modules\MyBlog\Reports\PostSummary';
 
     public function show()
     {

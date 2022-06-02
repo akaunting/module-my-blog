@@ -26,6 +26,34 @@ class Comment extends Model
     }
 
     /**
+     * Get the line actions.
+     *
+     * @return array
+     */
+    public function getLineActionsAttribute()
+    {
+        $actions = [];
+
+        $actions[] = [
+            'title' => trans('general.edit'),
+            'icon' => 'edit',
+            'url' => route('my-blog.comments.edit', $this->id),
+            'permission' => 'update-my-blog-comments',
+        ];
+
+        $actions[] = [
+            'type' => 'delete',
+            'title' => trans_choice('my-blog::general.comments', 1),
+            'icon' => 'delete',
+            'route' => 'my-blog.comments.destroy',
+            'permission' => 'delete-my-blog-comments',
+            'model' => $this,
+        ];
+
+        return $actions;
+    }
+
+    /**
      * Create a new factory instance for the model.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory

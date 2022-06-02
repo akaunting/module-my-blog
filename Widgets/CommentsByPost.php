@@ -9,9 +9,9 @@ class CommentsByPost extends Widget
 {
     public $default_name = 'my-blog::widgets.comments_by_post';
 
-    public $default_settings = [
-        'width' => 'col-md-6',
-    ];
+    public $description = 'my-blog::widgets.description.comments_by_post';
+
+    public $report_class = 'Modules\MyBlog\Reports\CommentSummary';
 
     public function show()
     {

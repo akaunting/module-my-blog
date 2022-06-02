@@ -16,4 +16,14 @@ return [
         ],
     ],
 
+    'form_description' => [
+        'post'          => 'Enter the post name, description and select the category.',
+        'comment'       => 'Select the post and enter the comment in the description field.',
+    ],
+
+    'empty' => [
+        'comments' => 'Write comments for posts.',
+        'posts' => 'Write posts and publish them.',
+    ],
+
 ];

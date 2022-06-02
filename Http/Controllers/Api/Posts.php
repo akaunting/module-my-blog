@@ -4,50 +4,50 @@ namespace Modules\MyBlog\Http\Controllers\Api;
 
 use App\Abstracts\Http\ApiController;
 use Modules\MyBlog\Http\Requests\Post as Request;
+use Modules\MyBlog\Http\Resources\Post as Resource;
 use Modules\MyBlog\Jobs\CreatePost;
 use Modules\MyBlog\Jobs\DeletePost;
 use Modules\MyBlog\Jobs\UpdatePost;
 use Modules\MyBlog\Models\Post;
-use Modules\MyBlog\Transformers\Post as Transformer;
 
 class Posts extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $posts = Post::with('category', 'comments')->collect();
 
-        return $this->response->paginator($posts, new Transformer());
+        return Resource::collection($posts);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
         $post = Post::with('category', 'comments')->find($id);
 
-        return $this->item($post, new Transformer());
+        return new Resource($post);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  $request
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $post = $this->dispatch(new CreatePost($request));
 
-        return $this->response->created(route('api.my-blog.posts.show', $post->id), $this->item($post, new Transformer()));
+        return $this->created(route('api.my-blog.posts.show', $post->id), new Resource($post));
     }
 
     /**
@@ -55,46 +55,46 @@ class Posts extends ApiController
      *
      * @param  $post
      * @param  $request
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Post $post, Request $request)
     {
         $post = $this->dispatch(new UpdatePost($post, $request));
 
-        return $this->item($post->fresh(), new Transformer());
+        return new Resource($post->fresh());
     }
 
     /**
      * Enable the specified resource in storage.
      *
      * @param  Post  $post
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function enable(Post $post)
     {
         $post = $this->dispatch(new UpdatePost($post, request()->merge(['enabled' => 1])));
 
-        return $this->item($post->fresh(), new Transformer());
+        return new Resource($post->fresh());
     }
 
     /**
      * Disable the specified resource in storage.
      *
      * @param  Post  $post
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function disable(Post $post)
     {
         $post = $this->dispatch(new UpdatePost($post, request()->merge(['enabled' => 0])));
 
-        return $this->item($post->fresh(), new Transformer());
+        return new Resource($post->fresh());
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -103,9 +103,9 @@ class Posts extends ApiController
         try {
             $this->dispatch(new DeletePost($post));
 
-            return $this->response->noContent();
+            return $this->noContent();
         } catch(\Exception $e) {
-            $this->response->errorUnauthorized($e->getMessage());
+            $this->errorUnauthorized($e->getMessage());
         }
     }
 }

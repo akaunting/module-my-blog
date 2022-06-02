@@ -69,5 +69,11 @@ class AddCategoriesToReport extends Listener
         }
 
         $this->setRowNamesAndValues($event, $rows);
+
+        $event->class->row_tree_nodes = [];
+
+        $nodes = $this->getCategoriesNodes($rows);
+
+        $this->setTreeNodes($event, $nodes);
     }
 }

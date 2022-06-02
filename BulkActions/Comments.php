@@ -11,6 +11,13 @@ class Comments extends BulkAction
 {
     public $model = Comment::class;
 
+    public $text = 'my-blog::general.comments';
+
+    public $path = [
+        'group' => 'my-blog',
+        'type' => 'comments',
+    ];
+
     public $actions = [
         'delete' => [
             'name' => 'general.delete',

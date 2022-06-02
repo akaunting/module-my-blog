@@ -16,9 +16,9 @@ class PortalMenuTest extends FeatureTestCase
             ->get(route('portal.dashboard'))
             ->assertOk()
             ->assertSeeInOrder([
-                '<li class="nav-item">',
-                '<a class="nav-link" href="' . route('portal.my-blog.posts.index') . '" >',
-                '<span class="nav-link-text">' . trans_choice('my-blog::general.posts', 2) . '</span>',
+                '<li class="group relative pb-2.5">',
+                '<a class="flex items-center text-purple" href="' . route('portal.my-blog.posts.index') . '" >',
+                '<span class="text-sm ltr:ml-2 rtl:mr-2">' . trans_choice('my-blog::general.posts', 2) . '</span>',
             ], false);
     }
 
@@ -31,6 +31,6 @@ class PortalMenuTest extends FeatureTestCase
         $this->loginAs(Contact::first()->user)
             ->get(route('portal.dashboard'))
             ->assertOk()
-            ->assertDontSee('<a class="nav-link" href="' . route('portal.my-blog.posts.index') . '" >', false);
+            ->assertDontSee('<a class="flex items-center text-purple" href="' . route('portal.my-blog.posts.index') . '" >', false);
     }
 }

@@ -1,7 +1,7 @@
 {
     "alias": "my-blog",
-    "icon": "fa fa-pen",
-    "version": "1.1.0",
+    "icon": "edit",
+    "version": "2.0.0",
     "active": 1,
     "providers": [
         "Modules\\MyBlog\\Providers\\Event",
@@ -16,9 +16,6 @@
         "Modules\\MyBlog\\Reports\\CommentSummary"
     ],
     "widgets": [
-        "Modules\\MyBlog\\Widgets\\TotalAuthors",
-        "Modules\\MyBlog\\Widgets\\TotalPosts",
-        "Modules\\MyBlog\\Widgets\\TotalComments",
         "Modules\\MyBlog\\Widgets\\PostsByCategory",
         "Modules\\MyBlog\\Widgets\\CommentsByPost",
         "Modules\\MyBlog\\Widgets\\TopAuthors",
@@ -27,17 +24,16 @@
     ],
     "settings": [
         {
-            "type": "textGroup",
+            "type": "text",
             "name": "header",
             "title": "my-blog::settings.header",
-            "icon": "fa fa-user",
             "attributes": {
                 "required": "required"
             },
             "rules": "required|string"
         },
         {
-            "type": "radioGroup",
+            "type": "switch",
             "name": "enable_comments",
             "title": "my-blog::settings.enable_comments",
             "enable": "general.yes",
@@ -46,7 +42,7 @@
             "rules": "integer|boolean"
         },
         {
-            "type": "textareaGroup",
+            "type": "textarea",
             "name": "meta_description",
             "title": "my-blog::settings.meta_description",
             "attributes": {},

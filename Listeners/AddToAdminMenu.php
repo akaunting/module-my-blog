@@ -35,7 +35,7 @@ class AddToAdminMenu
                 }
             }, 15, [
                 'title' => $title,
-                'icon' => 'fa fa-pen',
+                'icon' => 'edit',
             ]);
         }
     }

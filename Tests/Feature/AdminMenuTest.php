@@ -15,9 +15,9 @@ class AdminMenuTest extends FeatureTestCase
             ->get(route('dashboard'))
             ->assertOk()
             ->assertSeeInOrder([
-                '<li class="nav-item">',
-                '<a class="nav-link" href="' . route('my-blog.posts.index') . '" >',
-                '<span class="nav-link-text">' . trans_choice('my-blog::general.posts', 2) . '</span>',
+                '<li class="group relative pb-2.5">',
+                '<a class="flex items-center text-purple" href="' . route('my-blog.posts.index') . '">',
+                '<span class="text-sm ltr:ml-2 rtl:mr-2">' . trans_choice('my-blog::general.posts', 2) . '</span>',
             ], false);
     }
 
@@ -30,7 +30,7 @@ class AdminMenuTest extends FeatureTestCase
         $this->loginAs()
             ->get(route('dashboard'))
             ->assertOk()
-            ->assertDontSee('<a class="nav-link" href="' . route('my-blog.posts.index') . '" >', false);
+            ->assertDontSee('<a class="flex items-center text-purple" href="' . route('my-blog.posts.index') . '">', false);
     }
 
     public function testItShouldSeeAdminCommentsMenuItem()
@@ -39,9 +39,9 @@ class AdminMenuTest extends FeatureTestCase
             ->get(route('dashboard'))
             ->assertOk()
             ->assertSeeInOrder([
-                '<li class="nav-item">',
-                '<a class="nav-link" href="' . route('my-blog.comments.index') . '" >',
-                '<span class="nav-link-text">' . trans_choice('my-blog::general.comments', 2) . '</span>',
+                '<li class="group relative pb-2.5">',
+                '<a class="flex items-center text-purple" href="' . route('my-blog.comments.index') . '">',
+                '<span class="text-sm ltr:ml-2 rtl:mr-2">' . trans_choice('my-blog::general.comments', 2) . '</span>',
             ], false);
     }
 
@@ -54,6 +54,6 @@ class AdminMenuTest extends FeatureTestCase
         $this->loginAs()
             ->get(route('dashboard'))
             ->assertOk()
-            ->assertDontSee('<a class="nav-link" href="' . route('my-blog.comments.index') . '" >', false);
+            ->assertDontSee('<a class="flex items-center text-purple" href="' . route('my-blog.comments.index') . '">', false);
     }
 }

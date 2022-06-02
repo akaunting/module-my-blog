@@ -1,60 +1,101 @@
-@extends('layouts.portal')
+<x-layouts.portal>
+    <x-slot name="title">
+        {{ trans_choice('my-blog::general.posts', 2) }}
+    </x-slot>
 
-@section('title', trans_choice('my-blog::general.posts', 2))
+    <x-slot name="content">
+        <x-index.container>
+            <x-index.search search-string="Modules\MyBlog\Models\Post" />
 
-@section('content')
-    <div class="card">
-        <div class="card-header border-bottom-0">
-            {!! Form::open([
-                'route' => 'portal.my-blog.posts.index',
-                'role' => 'form',
-                'method' => 'GET',
-                'class' => 'mb-0'
-            ]) !!}
+            <x-table>
+                <x-table.thead>
+                    <x-table.tr class="flex items-center px-1">
+                        @stack('name_th_start')
 
-                <div class="row">
-                    <div class="col-12 align-items-center">
-                        <x-search-string model="Modules\MyBlog\Models\Post" />
-                    </div>
-                </div>
+                        <x-table.th class="w-4/12 hidden sm:table-cell">
+                            @stack('name_th_inside_start')
 
-            {!! Form::close() !!}
-        </div>
+                            <x-slot name="first">
+                                <x-sortablelink column="name" title="{{ trans('general.name') }}" />
+                            </x-slot>
 
-        <div class="table-responsive">
-            <table class="table table-flush table-hover">
-                <thead class="thead-light">
-                    <tr class="row table-head-line">
-                        <th class="col-md-3">@sortablelink('name', trans('general.name'))</th>
-                        <th class="col-md-5">@sortablelink('description', trans('general.description'))</th>
-                        <th class="col-md-2">@sortablelink('category', trans_choice('general.categories', 1))</th>
-                        <th class="col-md-2">@sortablelink('enabled', trans('general.enabled'))</th>
-                    </tr>
-                </thead>
+                            @stack('author_th_inside_start')
 
-                <tbody>
-                    @foreach($posts as $post)
-                        <tr class="row align-items-center border-top-1 tr-py">
-                            <td class="col-md-3">
-                                <a href="{{ route('portal.my-blog.posts.show', $post->id) }}">{{ $post->name }}</a>
-                            </td>
-                            <td class="col-md-5 long-texts">{{ $post->description }}</td>
-                            <td class="col-md-2">{{ $post->category->name }}</td>
-                            <td class="col-md-2">{{ $post->enabled }}</td>
-                        </tr>
+                            <x-slot name="second">
+                                <x-sortablelink column="owner" title="{{ trans_choice('my-blog::general.authors', 1) }}" />
+                            </x-slot>
+
+                            @stack('author_th_inside_end')
+                        </x-table.th>
+
+                        @stack('category_th_start')
+
+                        <x-table.th class="w-3/12 hidden sm:table-cell">
+                            <x-sortablelink column="category.name" title="{{ trans_choice('general.categories', 1) }}" />
+                        </x-table.th>
+
+                        @stack('description_th_start')
+
+                        <x-table.th class="w-5/12">
+                            <x-sortablelink column="description" title="{{ trans('general.description') }}" />
+                        </x-table.th>
+
+                        @stack('description_th_end')
+                    </x-table.tr>
+                </x-table.thead>
+
+                <x-table.tbody>
+                    @foreach($posts as $item)
+                        <x-table.tr href="{{ route('portal.my-blog.posts.show', $item->id) }}">
+                            <x-table.td class="p-0" override="class"></x-table.td>
+
+                            @stack('name_td_start')
+
+                            <x-table.td class="w-4/12 hidden sm:table-cell">
+                                @stack('name_td_inside_start')
+
+                                <x-slot name="first" class="font-bold truncate" override="class">
+                                    {{ $item->name }}
+
+                                    @if (! $item->enabled)
+                                        <x-index.disable text="{{ trans_choice('my-blog::general.posts', 1) }}" />
+                                    @endif
+                                </x-slot>
+
+                                @stack('author_td_inside_start')
+
+                                <x-slot name="second">
+                                    {{ $item->owner->name }}
+                                </x-slot>
+
+                                @stack('author_td_inside_end')
+                            </x-table.td>
+
+                            @stack('category_td_start')
+
+                            <x-table.td class="w-3/12 truncate hidden sm:table-cell">
+                                <div class="flex items-center">
+                                    <x-index.category :model="$item->category" />
+                                </div>
+                            </x-table.td>
+
+                            @stack('description_td_start')
+
+                            <x-table.td class="w-5/12 truncate">
+                                <div class="w-32">
+                                    {{ $item->description }}
+                                </div>
+                            </x-table.td>
+
+                            @stack('description_td_end')
+                        </x-table.tr>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
+                </x-table.tbody>
+            </x-table>
 
-        <div class="card-footer table-action">
-            <div class="row">
-                @include('partials.admin.pagination', ['items' => $posts])
-            </div>
-        </div>
-    </div>
-@endsection
+            <x-pagination :items="$posts" />
+        </x-index.container>
+    </x-slot>
 
-@push('scripts_start')
-    <script src="{{ asset('modules/MyBlog/Resources/assets/js/posts.min.js?v=' . module_version('my-blog')) }}"></script>
-@endpush
+    <x-script alias="my-blog" file="posts" />
+</x-layouts.portal>

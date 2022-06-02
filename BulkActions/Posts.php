@@ -11,6 +11,13 @@ class Posts extends BulkAction
 {
     public $model = Post::class;
 
+    public $text = 'my-blog::general.posts';
+
+    public $path = [
+        'group' => 'my-blog',
+        'type' => 'posts',
+    ];
+
     public $actions = [
         'enable' => [
             'name' => 'general.enable',

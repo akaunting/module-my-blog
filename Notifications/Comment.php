@@ -3,7 +3,7 @@
 namespace Modules\MyBlog\Notifications;
 
 use App\Abstracts\Notification;
-use App\Models\Common\EmailTemplate;
+use App\Models\Setting\EmailTemplate;
 use Illuminate\Notifications\Messages\MailMessage;
 use Modules\MyBlog\Models\Comment as Model;
 
@@ -36,7 +36,7 @@ class Comment extends Notification
      */
     public function toMail($notifiable): MailMessage
     {
-        $message = $this->initMessage();
+        $message = $this->initMailMessage();
 
         return $message;
     }
@@ -48,6 +48,8 @@ class Comment extends Notification
     {
         return [
             'template_alias' => $this->template->alias,
+            'title' => trans('my-blog::notifications.menu.' . $this->template->alias . '.title'),
+            'description' => trans('my-blog::notifications.menu.' . $this->template->alias . '.description', $this->getTagsBinding()),
             'post_id' => $this->comment->post->id,
             'post_name' => $this->comment->post->name,
             'comment_id' => $this->comment->id,
@@ -60,6 +62,7 @@ class Comment extends Notification
         return [
             '{post_name}',
             '{post_author}',
+            '{post_admin_link}',
             '{comment_author}',
             '{comment_description}',
             '{company_name}',
@@ -71,6 +74,7 @@ class Comment extends Notification
         return [
             $this->comment->post->name,
             $this->comment->post->owner->name,
+            route('my-blog.posts.show', $this->comment->post->id),
             $this->comment->owner->name,
             $this->comment->description,
             $this->comment->company->name,

@@ -11,7 +11,9 @@ class CommentSummary extends Report
 
     public $category = 'my-blog::general.name';
 
-    public $icon = 'fa fa-pen';
+    public $type = 'summary';
+
+    public $icon = 'chat';
 
     public $has_money = false;
 
@@ -29,7 +31,6 @@ class CommentSummary extends Report
         return [
             $this->getGroupField(),
             $this->getPeriodField(),
-            $this->getChartField(),
         ];
     }
 }

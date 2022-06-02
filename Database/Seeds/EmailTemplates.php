@@ -3,11 +3,14 @@
 namespace Modules\MyBlog\Database\Seeds;
 
 use App\Abstracts\Model;
-use App\Models\Common\EmailTemplate;
+use App\Traits\Jobs;
 use Illuminate\Database\Seeder;
+use App\Jobs\Setting\CreateEmailTemplate;
 
 class EmailTemplates extends Seeder
 {
+    use Jobs;
+
     public function run()
     {
         Model::unguard();
@@ -35,14 +38,15 @@ class EmailTemplates extends Seeder
         ];
 
         foreach ($templates as $template) {
-            EmailTemplate::firstOrCreate([
-                'company_id' => $company_id,
-                'alias'      => $template['alias'],
-                'class'      => $template['class'],
-                'name'       => $template['name'],
-                'subject'    => trans('my-blog::email_templates.' . $template['alias'] . '.subject'),
-                'body'       => trans('my-blog::email_templates.' . $template['alias'] . '.body'),
-            ]);
+            $this->dispatch(new CreateEmailTemplate([
+                'company_id'    => $company_id,
+                'alias'         => $template['alias'],
+                'class'         => $template['class'],
+                'name'          => $template['name'],
+                'subject'       => trans('my-blog::email_templates.' . $template['alias'] . '.subject'),
+                'body'          => trans('my-blog::email_templates.' . $template['alias'] . '.body'),
+                'created_from'  => 'my-blog::seed',
+            ]));
         }
     }
 }

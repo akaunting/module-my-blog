@@ -1,6 +1,6 @@
 {
     "name": "module-my-blog",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "private": true,
     "scripts": {
         "dev": "npm run development",
@@ -13,7 +13,8 @@
     },
     "devDependencies": {
         "cross-env": "^5.2.1",
-        "laravel-mix": "^6.0.39"
+        "laravel-mix": "^6.0.39",
+        "resolve-url-loader": "^5.0.0"
     },
     "author": "Akaunting Inc <info@akaunting.com>",
     "description": "Free Accounting Software"

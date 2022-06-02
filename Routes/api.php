@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
  * @see \App\Providers\Route::register
  */
 
-Route::api('my-blog', function ($api) {
-    $api->get('posts/{post}/enable', 'Posts@enable')->name('.posts.enable');
-    $api->get('posts/{post}/disable', 'Posts@disable')->name('.posts.disable');
-    $api->resource('posts', 'Posts');
-    $api->resource('comments', 'Comments');
+Route::api('my-blog', function () {
+    Route::get('posts/{post}/enable', 'Posts@enable')->name('posts.enable');
+    Route::get('posts/{post}/disable', 'Posts@disable')->name('posts.disable');
+    Route::apiResource('posts', 'Posts');
+    Route::apiResource('comments', 'Comments');
 });
