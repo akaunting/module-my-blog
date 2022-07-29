@@ -1,21 +1,22 @@
 <?php
- namespace Modules\MyBlog\Listeners;
 
- use App\Events\Menu\NewwCreated;
- use App\Traits\Permissions;
+namespace Modules\MyBlog\Listeners;
 
- class AddToNewwMenu
- {
+use App\Events\Menu\NewwCreated;
+use App\Traits\Permissions;
+
+class AddToNewwMenu
+{
     use Permissions;
 
-     /**
-      * Handle the event.
-      *
-      * @param NewwCreated $event
-      * @return void
-      */
-     public function handle(NewwCreated $event)
-     {
+    /**
+     * Handle the event.
+     *
+     * @param NewwCreated $event
+     * @return void
+     */
+    public function handle(NewwCreated $event)
+    {
         $menu = $event->menu;
 
         $title = trim(trans_choice('my-blog::general.posts', 1));
@@ -27,5 +28,5 @@
         if ($this->canAccessMenuItem($title, 'create-my-blog-comments')) {
             $menu->route('my-blog.comments.create', $title, [], 81, ['icon' => 'chat']);
         }
-     }
- }
+    }
+}
