@@ -20,12 +20,12 @@
 
         $title = trim(trans_choice('my-blog::general.posts', 1));
         if ($this->canAccessMenuItem($title, 'create-my-blog-posts')) {
-            $menu->route('my-blog.posts.create', $title, [], 70, ['icon' => 'edit']);
+            $menu->route('my-blog.posts.create', $title, [], 80, ['icon' => 'edit']);
         }
 
         $title = trim(trans_choice('my-blog::general.comments', 1));
         if ($this->canAccessMenuItem($title, 'create-my-blog-comments')) {
-            $menu->route('my-blog.comments.create', $title, [], 71, ['icon' => 'chat']);
+            $menu->route('my-blog.comments.create', $title, [], 81, ['icon' => 'chat']);
         }
      }
  }
