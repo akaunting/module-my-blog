@@ -1,7 +1,8 @@
 {
-    "require": {
-
+    "config": {
+        "autoloader-suffix": "MyBlog"
     },
+    "require": {},
     "replace": {
         "guzzlehttp/guzzle": "*",
         "guzzlehttp/psr7": "*",
